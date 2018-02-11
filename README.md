@@ -2,6 +2,8 @@
 
 Download repo and run `npm install`
 
+Run with `node server.js`
+
 Defualt server runs on `localhost:3000`
 
 ##  Access-Control-Allow-Origin ERROR:
