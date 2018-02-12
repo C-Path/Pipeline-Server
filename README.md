@@ -4,7 +4,9 @@ Download repo and run `npm install`
 
 Run with `node server.js`
 
-Defualt server runs on `localhost:3000`
+Default server runs on `localhost:3000`
+
+TODO: Add API table with actions...
 
 ##  Access-Control-Allow-Origin ERROR:
 
