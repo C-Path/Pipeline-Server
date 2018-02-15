@@ -4,6 +4,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
+    username: {
+        type: String,
+    },
     name: {
         type: String,
         Required: 'Please enter'
