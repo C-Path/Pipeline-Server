@@ -3,6 +3,7 @@ var express = require('express'),
     port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
     Project = require('./api/models/projectsListModels'),
+    User = require('./api/models/userModels')
     bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
@@ -12,8 +13,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-var routes = require('./api/routes/projectsListRoutes');
-routes(app);
+var projectRoutes = require('./api/routes/projectsListRoutes');
+var userRoutes = require('./api/routes/userRoutes');
+projectRoutes(app);
+userRoutes(app);
 
 app.listen(port);
 

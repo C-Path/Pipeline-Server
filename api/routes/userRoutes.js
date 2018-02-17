@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (app) {
-    var projectList = require('../controllers/projectsListControllers')
+    var authentication = require('../controllers/authenticationController')
 
     /* Setting the headers allows for CORS so it will run normal locally */
     app.use(function(req, res, next) {
@@ -10,11 +10,10 @@ module.exports = function (app) {
         next();
       });
 
-    app.route('/projects')
-        .get(projectList.list_all_projects)
-        .post(projectList.create_a_project);
+    app.route('/authenticate')
+        .post(authentication.authenticate);
 
-    app.route('projects/:projectId')
-        .get(projectList.read_a_project);
+    app.route('/users')
+      .post(authentication.create_a_user)
 
 }

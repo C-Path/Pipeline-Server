@@ -27,9 +27,7 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   var user = this;
-
   if (!user.isModified('password')) return next()
-
   bcrypt.genSalt(SALT_NUM, function(err, salt) {
     if (err) return next(err)
 
@@ -41,12 +39,5 @@ UserSchema.pre('save', function(next) {
     })
   })
 })
-
-UserSchema.methods.comparePassword = function(givenPass, cb) {
-  bcrypt.compare(givenPass, this.password, function(err, isMatch) {
-    if (err) return cb(err)
-    cb(null, isMatch)
-  })
-}
 
 module.exports = mongoose.model('User', UserSchema)
