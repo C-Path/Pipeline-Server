@@ -12,6 +12,7 @@ module.exports = function (app) {
 
     app.route('/files')
         .get(fileList.list_all_files)
+        .delete(fileList.delete_old_files)
         .post(fileList.create_a_file);
 
 }

@@ -20,3 +20,14 @@ exports.create_a_file = function (req, res) {
         res.json(file);
     });
 };
+
+exports.delete_old_files = function (req, res) {
+    var date = new Date();
+    var daysToDeletion = 30;
+    var deletionDate = new Date(date.setDate(date.getDate() - daysToDeletion));
+    File.deleteMany({"Created_date" : {$lt : deletionDate}}, function (err, resp) {
+        if (err)
+            res.send(err);
+        res.json(resp);
+    })
+}
