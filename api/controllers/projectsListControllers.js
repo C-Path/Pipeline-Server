@@ -12,9 +12,8 @@ exports.list_all_projects = function (req, res) {
 };
 
 exports.create_a_project = function (req, res) {
-    console.log("HEEEEY", req.body)
     var new_project = new Project(req.body);
-    console.log("Received: ", new_project)
+
     new_project.save(function (err, project) {
         if (err)
             res.send(err);
