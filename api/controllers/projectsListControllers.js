@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Project = mongoose.model('Projects');
 
 exports.list_all_projects = function (req, res) {
-    Project.find({}, function (err, project) {
+    Project.find({"username":req.query.username}, function (err, project) {
         if (err)
             res.send(err);
         res.json(project);
