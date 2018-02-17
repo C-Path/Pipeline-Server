@@ -5,11 +5,14 @@ var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
     username: {
-        type: String,
+        type: String
     },
     name: {
         type: String,
         Required: 'Please enter'
+    },
+    description: {
+      type: String
     },
     active: {
         type: String
