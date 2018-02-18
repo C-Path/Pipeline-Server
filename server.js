@@ -5,7 +5,9 @@ var express = require('express'),
     Project = require('./api/models/projectsListModels'),
     User = require('./api/models/userModels'),
     File = require('./api/models/fileModels'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    jwt = require('jsonwebtoken'),
+    config = require('./config')
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/Projectdb');
@@ -13,15 +15,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+app.set('superSecret', config.secret);
 
-var projectRoutes = require('./api/routes/projectsListRoutes');
-var userRoutes = require('./api/routes/userRoutes');
-var fileRoutes = require('./api/routes/fileRoutes');
-projectRoutes(app);
-userRoutes(app);
-fileRoutes(app);
+var authentication = require('./api/routes/authentication')
+authentication(app)
 
 app.use(function(req, res, next) {
+  if (req.url === '/authenticate') return next();
+
   var token = req.body.token
 
   if (token) {
@@ -40,6 +41,13 @@ app.use(function(req, res, next) {
     })
   }
 })
+
+var projectRoutes = require('./api/routes/projectsListRoutes');
+var userRoutes = require('./api/routes/userRoutes');
+var fileRoutes = require('./api/routes/fileRoutes');
+projectRoutes(app);
+userRoutes(app);
+fileRoutes(app);
 
 app.listen(port);
 
