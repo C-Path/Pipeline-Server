@@ -27,6 +27,12 @@ var FileSchema = new Schema({
     },
     completed_date: {
         type: Date
+    },
+    contribution: {
+        type: Boolean
+    },
+    approved: {
+        type: Boolean
     }
 })
 
