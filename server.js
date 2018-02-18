@@ -21,6 +21,26 @@ projectRoutes(app);
 userRoutes(app);
 fileRoutes(app);
 
+app.use(function(req, res, next) {
+  var token = req.body.token
+
+  if (token) {
+    jwt.verify(token, app.get('superSecret'), function (err, decoded) {
+      if (err) {
+        return res.json({authenticated: false, message: 'Token authentication failed'})
+      } else {
+        req.decoded = decoded
+        next()
+      }
+    })
+  } else {
+    return res.status(403).send({
+      authenticated: false,
+      message: 'No token provided'
+    })
+  }
+})
+
 app.listen(port);
 
 console.log("server started on: " + port);

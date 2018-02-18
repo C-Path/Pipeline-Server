@@ -22,11 +22,17 @@ exports.authenticate = function (req, res) {
     if (user != null) {
       comparePassword(req.body.password, user, function(err, isMatch, user) {
         if (err) res.send(err)
-
-        res.json({
-          "authenticated": isMatch,
+        const payload = {
           "username": user.username,
-          "role": user.role
+          "role": user.role,
+        }
+
+        var token = jwt.sign(payload, app.get('superSecret'), {
+          expiresInMinutes: 1440 // expires in 24 Hours
+        })
+        res.json({
+          authenticated: isMatch,
+          token: token
         });
         })
     } else {
