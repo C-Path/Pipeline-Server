@@ -22,16 +22,16 @@ authentication(app)
 
 app.use(function(req, res, next) {
   if (req.url === '/authenticate') return next();
-
-  var token = req.body.token
-
+  console.log('req.url', req.url)
+  var token = req.body.token || req.query.token || req.headers['x-access-token']
+  console.log('token is', token)
   if (token) {
     jwt.verify(token, app.get('superSecret'), function (err, decoded) {
       if (err) {
         return res.json({authenticated: false, message: 'Token authentication failed'})
       } else {
-        req.decoded = decoded
-        next()
+        console.log('next')
+        return next()
       }
     })
   } else {

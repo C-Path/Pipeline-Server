@@ -17,14 +17,14 @@ module.exports = function(app) {
       if (err) res.send(err)
 
       if (user != null) {
-
+        console.log('found')
         comparePassword(req.body.password, user, function(err, isMatch, user) {
           if (err) res.send(err)
           const payload = {
             "username": user.username,
             "role": user.role,
           }
-
+          console.log('Match ', isMatch)
           var token = jwt.sign(payload, app.get('superSecret'), {
             expiresIn: 60*60*24 // expires in 24 Hours
           })
