@@ -55,3 +55,19 @@ exports.delete_old_files = function (req, res) {
             res.json(resp);
         })
 }
+
+exports.list_file_by_id = function (req, res) {
+    File.find({"_id":req.params.id}, function (err, files) {
+        if (err)
+            res.send(err);
+        res.json(files);
+    });
+};
+
+exports.delete_file_by_id = function (req, res) {
+    File.find({"_id":req.params.id}, function (err, files) {
+        if (err)
+            res.send(err);
+        res.json(files);
+    });
+};

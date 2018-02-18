@@ -19,5 +19,9 @@ module.exports = function (app) {
     app.route('/files/:username')
         .get(fileList.list_all_files_by_user)
 
+    app.route('files/:file_id')
+        .get(fileList.list_file_by_id)
+        .delete(fileList.delete_file_by_id)
+
 
 }
