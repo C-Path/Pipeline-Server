@@ -1,7 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Project = mongoose.model('Projects');
+    Project = mongoose.model('Projects'),
+    tManager = require('./tokenController');
 
 exports.list_all_projects = function (req, res) {
     Project.find({
