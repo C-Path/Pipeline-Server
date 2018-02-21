@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
     tManager = require('./tokenController');
 
 exports.list_all_projects = function (req, res) {
-  console.log('List with', req)
     Project.find({"username":req.query.username}, function (err, projects) {
         if (err)
             res.send(err);
