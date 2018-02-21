@@ -4,7 +4,17 @@ var mongoose = require('mongoose'),
     File = mongoose.model('Files');
 
 exports.list_all_files = function (req, res) {
-    File.find({"username":req.query.username}, function (err, files) {
+    File.find({}, function (err, files) {
+        if (err)
+            res.send(err);
+        res.json(files);
+    });
+};
+
+exports.list_all_files_by_user = function (req, res) {
+    File.find({
+        "username": req.query.username
+    }, function (err, files) {
         if (err)
             res.send(err);
         res.json(files);
@@ -25,9 +35,39 @@ exports.delete_old_files = function (req, res) {
     var date = new Date();
     var daysToDeletion = 30;
     var deletionDate = new Date(date.setDate(date.getDate() - daysToDeletion));
-    File.deleteMany({"Created_date" : {$lt : deletionDate}}, function (err, resp) {
+    File.deleteMany({
+            $and: [{
+                    "Created_date": {
+                        $lt: deletionDate
+                    }
+                },
+                {
+                    "contribution": true
+                },
+                {
+                    "approved": true
+                }
+            ]
+        },
+        function (err, resp) {
+            if (err)
+                res.send(err);
+            res.json(resp);
+        })
+}
+
+exports.list_file_by_id = function (req, res) {
+    File.find({"_id":req.params.id}, function (err, files) {
         if (err)
             res.send(err);
-        res.json(resp);
-    })
-}
+        res.json(files);
+    });
+};
+
+exports.delete_file_by_id = function (req, res) {
+    File.find({"_id":req.params.id}, function (err, files) {
+        if (err)
+            res.send(err);
+        res.json(files);
+    });
+};

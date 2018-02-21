@@ -5,7 +5,9 @@ var mongoose = require('mongoose'),
     tManager = require('./tokenController');
 
 exports.list_all_projects = function (req, res) {
-    Project.find({"username":req.query.username}, function (err, projects) {
+    Project.find({
+        "username": req.query.username
+    }, function (err, projects) {
         if (err)
             res.send(err);
         res.json(projects);
@@ -23,9 +25,8 @@ exports.create_a_project = function (req, res) {
 };
 
 exports.read_a_project = function (req, res) {
-
-    Project.findById(req.params.projectId, function(err, project){
-        if(err)
+    Project.findById(req.params.projectId, function (err, project) {
+        if (err)
             res.send(err);
         res.json(project);
     });
