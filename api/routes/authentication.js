@@ -4,7 +4,8 @@ module.exports = function(app) {
   var mongoose = require('mongoose'),
       User = mongoose.model('User'),
       bcrypt = require('bcrypt'),
-      jwt = require('jsonwebtoken');
+      jwt = require('jsonwebtoken'),
+      config = require('../../config');
 
   app.use(function(req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
@@ -17,7 +18,6 @@ module.exports = function(app) {
       if (err) res.send(err)
 
       if (user != null) {
-        console.log('found')
         comparePassword(req.body.password, user, function(err, isMatch, user) {
           if (err) res.send(err)
 
@@ -26,7 +26,8 @@ module.exports = function(app) {
             "role": user.role,
           }
 
-          var token = jwt.sign(payload, 'supersecretsecret')
+          var token = jwt.sign(payload, app.get('secret'))
+
           res.json({
             authenticated: isMatch,
             token: token

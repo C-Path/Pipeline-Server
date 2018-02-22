@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-app.set('superSecret', config.secret);
+app.set('secret', config.secret);
 
 var authentication = require('./api/routes/authentication')
 authentication(app)
@@ -24,18 +24,16 @@ app.use(function(req, res, next) {
   if (req.url === '/authenticate') return next();
 
   var token = (req.body.token || req.query.token || req.headers['x-access-token'])
+
   if (token) {
-    // jwt.verify(token, "supersecretsecret", function (err, decoded) {
-    //   console.log('decode', decoded)
-    //   if (err) {
-    //     console.log("NOPE", err)
-    //     return res.json({authenticated: false, message: 'Token authentication failed'})
-    //   } else {
-    //     console.log('next')
-    //     return next()
-    //   }
-    // })
-    return next()
+    jwt.verify(token, app.get('secret'), function (err, decoded) {
+      if (err) {
+        return res.json({authenticated: false, message: 'Token authentication failed'})
+      } else {
+        return next()
+      }
+    })
+    // return next()
   } else {
     return res.status(403).send({
       authenticated: false,
