@@ -27,7 +27,7 @@ exports.create_a_file = function (req, res) {
     new_file.save(function (err, file) {
         if (err)
             res.send(err);
-        res.json(file);
+        res.status(201).json(file);
     });
 };
 

@@ -1,8 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Project = mongoose.model('Projects'),
-    tManager = require('./tokenController');
+    Project = mongoose.model('Projects');
 
 exports.list_all_projects = function (req, res) {
     Project.find({
@@ -20,7 +19,7 @@ exports.create_a_project = function (req, res) {
     new_project.save(function (err, project) {
         if (err)
             res.send(err);
-        res.json(project);
+        res.status(201).json(project);
     });
 };
 
