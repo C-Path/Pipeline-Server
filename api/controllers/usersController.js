@@ -10,6 +10,6 @@ exports.create_a_user = function (req, res) {
   }
   user.save(function (err, user) {
       if (err) res.send(err);
-      res.json(user);
+      res.status(201).json(user);
   });
 };
