@@ -45,9 +45,11 @@ app.use(function(req, res, next) {
 var projectRoutes = require('./api/routes/projectsListRoutes');
 var userRoutes = require('./api/routes/userRoutes');
 var fileRoutes = require('./api/routes/fileRoutes');
+var notifierRoutes = require('./api/routes/notifier');
 projectRoutes(app);
 userRoutes(app);
 fileRoutes(app);
+notifierRoutes(app);
 
 app.listen(port);
 
