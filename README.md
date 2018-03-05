@@ -6,7 +6,19 @@ Run with `node server.js`
 
 Default server runs on `localhost:3000`
 
-TODO: Add API table with actions...
+# API Documentation
+
+### GET
+Route | Description | Example output
+--- | --- | ---
+/projects?token=<token>&username=<username> | Displays all projects for a user |`[{"Created_date": "2018-03-03T16:56:19.233Z","_id": "5a9ad3b3410c181c76eb5f57","name": "RB Samples","description": "A collection of RB samples","username": "isaac@cpath.org","active": "false","__v": 0}]`
+/projects?token=<token>&params=<projectID> | Displays project by ID |`[{"Created_date": "2018-03-03T16:56:19.233Z","_id": "5a9ad3b3410c181c76eb5f57","name": "RB Samples","description": "A collection of RB samples","username": "isaac@cpath.org","active": "false","__v": 0}]`
+  
+  ### POST
+  
+  ### DELETE
+
+
 
 ##  Access-Control-Allow-Origin ERROR:
 
