@@ -14,7 +14,8 @@ module.exports = function (app) {
         .get(projectList.list_all_projects)
         .post(projectList.create_a_project);
 
-    app.route('projects/:projectId')
-        .get(projectList.read_a_project);
+    app.route('/projects/:projectId')
+        .get(projectList.read_a_project)
+        .delete(projectList.delete_project_by_id);
 
 }
