@@ -30,3 +30,11 @@ exports.read_a_project = function (req, res) {
         res.json(project);
     });
 };
+
+exports.delete_project_by_id = function (req, res) {
+    Project.find({"_id":req.params.projectId}).remove(function (err, result) {
+        if (err)
+            res.send(err);
+        res.json({"Deleted": true});
+    });
+};
