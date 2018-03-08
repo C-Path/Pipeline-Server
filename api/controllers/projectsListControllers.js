@@ -34,9 +34,17 @@ exports.read_a_project = function (req, res) {
 };
 
 exports.delete_project_by_id = function (req, res) {
-    Project.find({"_id":req.params.projectId}).remove(function (err, result) {
+    Project.findById(req.params.projectId, function (err, project) {
         if (err)
             res.send(err);
-        res.json({"Deleted": true});
-    });
+        if(project.username == helpers.getUsername(req.query.token)) {
+          Project.remove(project, function (err, result) {
+            if (err)
+                res.send(err);
+            res.json({"Deleted": true});
+          })
+        } else {
+          res.json({"message": "Authentication failed: user does not have access to delete"})
+        }
+  });
 };
