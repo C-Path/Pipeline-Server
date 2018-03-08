@@ -16,25 +16,24 @@ module.exports = function(app) {
   app.post('/authenticate', function (req, res) {
     User.findOne({username: req.body.username}, function(err, user) {
       if (err) res.send(err)
-
       if (user != null) {
-        comparePassword(req.body.password, user, function(err, isMatch, user) {
-          if (err) res.send(err)
-
-          const payload = {
-            "username": user.username,
-            "role": user.role,
-          }
-
-          var token = jwt.sign(payload, app.get('secret'))
-
           res.json({
-            authenticated: isMatch,
-            token: token
+            authenticated: true,
+            token: req.body.token,
+            role: user.role
           });
-          })
       } else {
-        res.json({"error": "User Not Found"})
+        User.insertMany({username: req.body.username, password: req.body.token, role: "USER"}, function(err, user) {
+          if (err) {
+            res.json({"failure":"Failed creating user"})
+          } else {
+            res.json({
+              authenticated: true,
+              token: req.body.token,
+              role: user.role
+            });
+          }
+        })
       }
     })
   })
