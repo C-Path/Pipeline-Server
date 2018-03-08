@@ -1,11 +1,12 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Project = mongoose.model('Projects');
+    Project = mongoose.model('Projects'),
+    helpers = require('../helpers.js');
 
 exports.list_all_projects = function (req, res) {
     Project.find({
-        "username": req.query.username
+        "username": helpers.getUsername(req.query.token)
     }, function (err, projects) {
         if (err)
             res.send(err);
@@ -15,6 +16,7 @@ exports.list_all_projects = function (req, res) {
 
 exports.create_a_project = function (req, res) {
     var new_project = new Project(req.body);
+    new_project.username = helpers.getUsername(req.query.token)
 
     new_project.save(function (err, project) {
         if (err)
