@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 exports.list_all_projects = function (req, res) {
     Project.find({
         "username": helpers.getUsername(req.query.token)
-    }, function (err, projects) {
+    }, {username: 0, active: 0, Created_date: 0}, function (err, projects) {
         if (err)
             res.send(err);
         res.json(projects);
@@ -21,12 +21,12 @@ exports.create_a_project = function (req, res) {
     new_project.save(function (err, project) {
         if (err)
             res.send(err);
-        res.status(201).json(project);
+        res.status(201).json({name: project.name, description: project.description});
     });
 };
 
 exports.read_a_project = function (req, res) {
-    Project.findById(req.params.projectId, function (err, project) {
+    Project.findById(req.params.projectId, {username: 0, active: 0, Created_date: 0}, function (err, project) {
         if (err)
             res.send(err);
         res.json(project);
