@@ -4,8 +4,7 @@ module.exports = function(app) {
   var mongoose = require('mongoose'),
       User = mongoose.model('User'),
       bcrypt = require('bcrypt'),
-      jwt = require('jsonwebtoken'),
-      config = require('../../config');
+      jwt = require('jsonwebtoken');
 
   app.use(function(req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");
