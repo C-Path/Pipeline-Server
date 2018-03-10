@@ -9,7 +9,6 @@ exports.getUsername = function (token) {
     if (err) {
       console.log(err)
     } else {
-      console.log('returning', decoded["username"])
       username = decoded["username"]
     }
   })
