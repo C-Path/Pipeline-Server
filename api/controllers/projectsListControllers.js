@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 
 exports.list_all_projects = function (req, res) {
     Project.find({
-        "username": helpers.getUsername(req.query.token)
+        "username": req.query.username
     }, {username: 0, active: 0, Created_date: 0}, function (err, projects) {
         if (err)
             res.send(err);
@@ -16,7 +16,7 @@ exports.list_all_projects = function (req, res) {
 
 exports.create_a_project = function (req, res) {
     var new_project = new Project(req.body);
-    new_project.username = helpers.getUsername(req.query.token)
+    new_project.username = req.body.username
 
     new_project.save(function (err, project) {
         if (err)
@@ -37,7 +37,7 @@ exports.delete_project_by_id = function (req, res) {
     Project.findById(req.params.projectId, function (err, project) {
         if (err)
             res.send(err);
-        if(project.username == helpers.getUsername(req.query.token)) {
+        if(project.username == req.query.username) {
           Project.remove(project, function (err, result) {
             if (err)
                 res.send(err);
