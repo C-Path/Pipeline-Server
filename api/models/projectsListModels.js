@@ -15,7 +15,8 @@ var ProjectSchema = new Schema({
       type: String
     },
     active: {
-        type: String
+        type: String,
+        default: "false"
     },
     Created_date: {
         type: Date,
