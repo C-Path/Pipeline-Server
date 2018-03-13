@@ -11,8 +11,9 @@ Default server runs on `localhost:3000`
 All routes except login require a token as a parameter. The token is received upon authentication.
 
 ### Projects
+
 Route | Description | Example route | Example output
---- | --- | ---
+--- | --- | --- | ---
 GET <br>/projects | Displays all projects for a user | http://localhost:3000/projects |`[{"_id": "5a9ad3b3410c181c76eb5f57","name": "RB Samples","description": "A collection of RB samples","__v": 0}]`
 GET <br>/projects/:projectid | Displays project by ID | http://localhost:3000/projects/5a9ad3b3410c181c76eb5f57 |`[{"_id": "5a9ad3b3410c181c76eb5f57","name": "RB Samples","description": "A collection of RB samples","active": "false","__v": 0}]`
 POST <br>/projects | Creates a new project | http://localhost:3000/projects/ <br> {name: "MyNewProject", description: "A collection of RB samples"} |`[{"_id": "5a9ad3b3410c181c76eb5f57","name": "RB Samples","description": "A collection of RB samples","active": "false","__v": 0}]`
