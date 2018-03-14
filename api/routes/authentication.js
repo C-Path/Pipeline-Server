@@ -16,21 +16,21 @@ module.exports = function (app) {
       username: req.body.username
     }, function (err, user) {
       if (err) res.send(err)
-      if (user != null) {
+      if (user != undefined) {
         comparePassword(req.body.password, user, function (err, isMatch, user) {
           if (err) res.send(err)
+          if (user != undefined) {
+            const payload = {
+              "username": user.username,
+              "role": user.role,
+            }
+            var token = jwt.sign(payload, app.get('secret'))
 
-          const payload = {
-            "username": user.username,
-            "role": user.role,
+            res.json({
+              authenticated: isMatch,
+              token: token
+            });
           }
-
-          var token = jwt.sign(payload, app.get('secret'))
-
-          res.json({
-            authenticated: isMatch,
-            token: token
-          });
         })
       } else {
         res.json({
@@ -44,7 +44,7 @@ module.exports = function (app) {
     if (givenPass === user.password) {
       cb(null, true, user)
     } else {
-      cb(null, false, user)
+      cb("passwords do not match")
     }
   }
 }
