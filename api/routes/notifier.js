@@ -10,6 +10,34 @@ module.exports = function(app) {
       next();
     });
 
+  app.post('/requestAccount', function (req, res) {
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: config.user,
+        pass: config.pass
+      }
+    })
+
+    console.log("Sending email", req.body)
+
+    var mailOptions = {
+      from: config.user,
+      // to: req.body.username,
+      to: 'isaac.c.lessard@gmail.com',
+      subject: 'ReSeqTB Pipeline - New User Account Request',
+      html: '<h1>New Account Request</h1><p>' + req.body.username + 'has requested access to the CPath TB web portal.</p><button>Accept</button>'
+    }
+
+    transporter.sendMail(mailOptions, function(err, info) {
+      if (err)
+        console.log("Error: ", err)
+      else
+        console.log("Email Sent: " + info.response)
+        res.json({response: info.response})
+    })
+  })
+
   app.post('/sendEmail', function (req, res) {
     var transporter = nodemailer.createTransport({
       service: 'gmail',

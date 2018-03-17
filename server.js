@@ -22,6 +22,7 @@ authentication(app)
 
 app.use(function(req, res, next) {
   if (req.url === '/authenticate') return next();
+  if (req.url === '/requestAccount') return next();
 
   var token = (req.body.token || req.query.token || req.headers['x-access-token'])
 
