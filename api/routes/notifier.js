@@ -19,14 +19,13 @@ module.exports = function(app) {
       }
     })
 
-    console.log("Sending email", req.body)
+    console.log("Sending email with...", req.body)
 
     var mailOptions = {
       from: config.user,
-      // to: req.body.username,
       to: 'isaac.c.lessard@gmail.com',
       subject: 'ReSeqTB Pipeline - New User Account Request',
-      html: '<h1>New Account Request</h1><p>' + req.body.username + 'has requested access to the CPath TB web portal.</p><button>Accept</button>'
+      html: '<h1>New Account Request</h1><p>' + req.body.Username + ' has requested access to the CPath TB web portal.</p><button onClick="submit">Accept</button></a>'
     }
 
     transporter.sendMail(mailOptions, function(err, info) {
