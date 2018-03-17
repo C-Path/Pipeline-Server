@@ -4,7 +4,11 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User');
 
 exports.create_a_user = function (req, res) {
-  var user = new User(req.body)
+  var newUser = {
+      username: req.body.username,
+      password: req.body.password
+  }
+  var user = new User(newUser)
   if (user.role !== "DATA_MANAGER") {
     user.role = "USER"
   }
