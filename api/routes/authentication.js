@@ -3,7 +3,9 @@
 module.exports = function (app) {
   var mongoose = require('mongoose'),
     User = mongoose.model('User'),
-    jwt = require('jsonwebtoken');
+    bcrypt = require('bcrypt'),
+    jwt = require('jsonwebtoken'),
+    config = require('../../config');
 
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -19,18 +21,18 @@ module.exports = function (app) {
       if (user != undefined) {
         comparePassword(req.body.password, user, function (err, isMatch, user) {
           if (err) res.send(err)
-          if (user != undefined) {
-            const payload = {
-              "username": user.username,
-              "role": user.role,
-            }
-            var token = jwt.sign(payload, app.get('secret'))
 
-            res.json({
-              authenticated: isMatch,
-              token: token
-            });
+          const payload = {
+            "username": user.username,
+            "role": user.role,
           }
+
+          var token = jwt.sign(payload, app.get('secret'))
+
+          res.json({
+            authenticated: isMatch,
+            token: token
+          });
         })
       } else {
         res.json({
@@ -41,10 +43,9 @@ module.exports = function (app) {
   })
 
   function comparePassword(givenPass, user, cb) {
-    if (givenPass === user.password) {
-      cb(null, true, user)
-    } else {
-      cb("passwords do not match")
-    }
+    bcrypt.compare(givenPass, user.password, function(err, isMatch) {
+      if (err) return cb(err)
+      cb(null, isMatch, user)
+    })
   }
 }
