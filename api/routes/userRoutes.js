@@ -13,4 +13,7 @@ module.exports = function (app) {
     app.route('/users')
       .post(users.create_a_user)
 
+    app.route('/requestUser')
+      .post(users.create_requested_user)
+
 }

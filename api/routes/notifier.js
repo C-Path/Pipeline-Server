@@ -25,7 +25,7 @@ module.exports = function(app) {
       from: config.user,
       to: 'isaac.c.lessard@gmail.com',
       subject: 'ReSeqTB Pipeline - New User Account Request',
-      html: '<h1>New Account Request</h1><p>' + req.body.Username + ' has requested access to the CPath TB web portal.</p><button onClick="submit">Accept</button></a>'
+      html: '<h1>New Account Request</h1><p>' + req.body.Username + ' has requested access to the CPath TB web portal.</p><a href="http://localhost:8080/newuser?email=' + req.body.Username + '"><button>Accept</button></a>'
     }
 
     transporter.sendMail(mailOptions, function(err, info) {
