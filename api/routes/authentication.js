@@ -25,9 +25,21 @@ module.exports = function (app) {
           const payload = {
             "username": user.username,
             "role": user.role,
+            aud: "pipeline.reseqtb.org",
+            iss: "pipeline-test.reseqtb.org",
+            exp: "10h",
           }
 
-          var token = jwt.sign(payload, app.get('secret'))
+
+          var cert = fs.readFileSync('../../certs/jwtClient.key');
+
+          var token = jwt.sign(payload, cert, { algorithm: 'RS256'})
+
+          //TEST key
+          var pubCert = fs.readFileSynce('../../certs/jwtClient.key.pub');
+          jwt.verify(token, pubCert, function (err, decoded) {
+            console.log("DECO: ", decoded)
+          })
 
           res.json({
             authenticated: isMatch,
